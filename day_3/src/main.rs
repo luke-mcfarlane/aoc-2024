@@ -24,8 +24,6 @@ fn main() {
             if content.chars().nth(j) == Some(',') && j > i && current.len() == 0 {
                 match content[i..j].parse() {
                     Ok(value) => {
-                        // println!(",: {}", value);
-
                         current.push(value);
                         j += 1;
                         i = j;
