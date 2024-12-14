@@ -1,17 +1,23 @@
 use library::read_file;
 
+const MUL: &str = "mul(";
+const DO: &str = "do()";
+const DONT: &str = "don't()";
+
 fn main() {
     let content = match read_file("input.txt") {
         Ok(content) => content,
         Err(error) => panic!("Problem reading the file: {error:?}"),
     };
 
-    const MUL: &str = "mul(";
-
     let mut i = 0;
-    let mut values: Vec<u32> = Vec::new(); 
+    let mut values: Vec<u32> = Vec::new();
+    let mut values_two: Vec<u32> = Vec::new();
+    let mut disabled = false;
 
     while i < content.len() - 8 {
+        if &content[i..i+4] == DO { disabled = false; i += 4; continue; }
+        if &content[i..i+7] == DONT { disabled = true; i += 7; continue; }
         if &content[i..i+4] != MUL { i+= 1; continue; }
 
         i += 4;
@@ -37,7 +43,15 @@ fn main() {
                 match content[i..j].parse() {
                     Ok(value) => {
                         current.push(value);
-                        values.push(current[0] * current[1]);
+
+                        let result = current[0] * current[1];
+
+                        values.push(result);
+                        if !disabled { values_two.push(result); }
+
+                        j += 1;
+                        i = j;
+                        break;
                     },
                     Err(_) => { break; }
                 }
@@ -48,7 +62,6 @@ fn main() {
         }
     }
 
-    println!("{:?}", values.into_iter().reduce(|acc, e| acc + e).unwrap());
+    println!("values: {}", values.into_iter().sum::<u32>());
+    println!("values part 2: {}", values_two.into_iter().sum::<u32>());
 }
-
-// mul(x,y)
