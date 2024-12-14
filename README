@@ -1,0 +1,13 @@
+# Advent of Code 2024
+
+This is my attempt at the Advent of Code 2024 using Rust.
+
+## Progress
+
+| Day | Part 1 | Part 2 |
+| --- | ------ | ------ |
+| 1   | [x]    | [x]    |
+| 2   | [x]    | []     |
+| 3   | [x]    | [x]    |
+| 4   | []     |        |
+| 5   | []     |        |
