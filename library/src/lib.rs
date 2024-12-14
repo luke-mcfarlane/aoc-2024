@@ -15,15 +15,13 @@ pub fn get_values(line: &str) -> Result<Vec<u32>, Box<dyn Error>> {
     while j < line.len() {
         j += 1;
 
-        if line.chars().nth(j) == Some(' ') {
-            vec.push(line[i..j].parse()?);
+        if line.chars().nth(j) != Some(' ') { continue; }
 
-            while line.chars().nth(j) == Some(' ') {
-                j += 1;
-            }
+        vec.push(line[i..j].parse()?);
 
-            i = j;
-        }
+        while line.chars().nth(j) == Some(' ') { j += 1; }
+
+        i = j;
     }
 
     vec.push(line[i..].parse()?);
